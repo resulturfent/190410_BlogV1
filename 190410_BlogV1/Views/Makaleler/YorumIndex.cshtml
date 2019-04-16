@@ -1,0 +1,87 @@
+﻿@using _190410_BlogV1.Models
+@model Makaleler
+
+@{
+    //Models klasöründe yazılan Yorumislemleri class'ını çağırıyoruz
+    Yorumislemleri yor = new Yorumislemleri();
+}
+<!--Yorum Listesi-->
+<div class="comments1">
+    <h4>YORUMLAR</h4>
+    @foreach (var item in yor.YorumListesi(Model.MakalelerID))
+    {
+        <div class="comments-main">
+            <div class="col-md-2 cmts-main-left">
+                <img src="images/avatar.png" alt="">
+            </div>
+            <div class="col-md-10 cmts-main-right">
+                <h5>@item.YorumBaslik</h5>
+                <p>@item.Yorumicerik.ToString()</p>
+                <div class="cmts">
+                    <div class="cmnts-left">
+                        <p>@item.YorumTarihi</p>
+                    </div>
+                    <div class="cmnts-right">
+                        <a href="#">Reply</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    }
+
+</div>
+<!-- Yorum ekleme alanı-->
+<div class="lev">
+    <div class="leave">
+        <h4>yorum Yazın</h4>
+    </div>
+    <div class="col-md-12 ">
+        <form method="post" action="/Makaleler/YorumIndex" @*id="frmMakaleYorum"*@ >
+            @*<label class="text-left"  for="author"></label>
+                <input class="form-control" placeholder="Adınızı Yazını" id="author" name="isim" type="text" value="" size="30" aria-required="true">*@
+            @*<label for="email"></label>
+                <input  class="form-control" id="email" name="email" type="text" value="" size="30" aria-required="true" placeholder="E-Mail Adresiniz">*@
+            <label for="url"></label>
+            <input class="form-control" id="url" name="yorumbasligi" type="text" value="" size="30" placeholder="Yorum Başlığı">
+
+            <label for="comment"></label>
+            <textarea class="form-control comment" placeholder="Yorum Alanı" name="Yorumicerik"></textarea>
+            <div class="clearfix"></div>
+            <div>
+                <br />
+                <input class="btn btn-primary btn-block" name="submit" type="submit" id="yorumEkle" value="GÖNDER">
+            </div>
+            <!--Makale ID değeri lazım ama gözükmesine gerek olmadığından hidden input tanımlıyoruz-->
+            <input type="hidden" name="Makale_ID" data-buttonmakaleid="@Model.MakalelerID" value="@Model.MakalelerID" />
+
+            <div class="clearfix"></div>
+        </form>
+
+    </div>
+</div>
+@section scripts{
+
+    <script src="~/template/js/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function(){
+                $("#yorumEkle").on("click",function(){
+                        var metin=$("#frmMakaleYorum").serialize();
+                                  $.ajax({
+                                                type:"post",
+                                                data:metin,
+                                                url:"/Makaleler/YorumEkle/",
+                                                success:function(){
+                                                alert("Eklendi");
+                                                },
+                                                error:function(){
+                                                alert("Hata");
+                                                }
+                                         });
+                                });
+        });
+
+    </script>
+    }

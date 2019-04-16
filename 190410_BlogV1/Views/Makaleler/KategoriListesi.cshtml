@@ -1,0 +1,12 @@
+﻿@model List<_190410_BlogV1.Models.Kategoriler>
+
+<div class="categories">
+    <h4>KATEGORİLER</h4>
+    @*<h6><a href="#">Vivamus vestibulum nulla</a></h6>*@
+    @foreach (var item in Model)
+        {
+            <h6>
+        <a href="#">@item.KategoriAdi</a>
+            </h6>
+        }   
+</div>

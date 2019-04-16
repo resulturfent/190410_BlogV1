@@ -1,0 +1,41 @@
+﻿@using _190410_BlogV1.Models
+@model List<Makaleler>
+
+@helper MetinKisalt(string metin)
+{
+    if (metin.Length > 150)
+    {
+        @metin.Substring(0, 150)
+
+    }
+    else
+    {
+        @metin
+    }
+}
+
+@foreach (var item in Model)
+{
+    <div class="biography">
+        <div class="biographys">
+            <div class="col-md-4 biography-info">
+                <img src="~/template/images/img11.jpg" class="img-responsive" alt="" />
+            </div>
+            <div class="col-md-8 biography-into">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>@item.Baslik</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="adm">Yazar: <a href="#">@item.Uyeler.Adi @item.Uyeler.Soyadi</a>|@item.EklenmeTarihi.Value.ToShortDateString()</h6>
+                    </div>
+                </div>
+                <p>@MetinKisalt(item.icerik)
+                <a href="/Makaleler/MakaleDetay?Makale_ID=@item.MakalelerID" class="link">Hepsini Oku</a> </p>
+               
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!--************************************************************************-->
+}
